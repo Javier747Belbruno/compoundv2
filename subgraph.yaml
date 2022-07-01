@@ -1,0 +1,35 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: kovan
+    source:
+      address: "0x5eAe89DC1C671724A672ff0630122ee834098657"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - Failure
+        - NewAdmin
+        - NewImplementation
+        - NewPendingAdmin
+        - NewPendingImplementation
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Failure(uint256,uint256,uint256)
+          handler: handleFailure
+        - event: NewAdmin(address,address)
+          handler: handleNewAdmin
+        - event: NewImplementation(address,address)
+          handler: handleNewImplementation
+        - event: NewPendingAdmin(address,address)
+          handler: handleNewPendingAdmin
+        - event: NewPendingImplementation(address,address)
+          handler: handleNewPendingImplementation
+      file: ./src/mapping.ts
